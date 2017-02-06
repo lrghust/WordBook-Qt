@@ -24,8 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        load.cpp
+        load.cpp \
+    Hash.cpp \
+    SqList.cpp \
+    mainfunc.cpp
 
-HEADERS  += load.h
+HEADERS  += load.h \
+    WordBook.h
 
 FORMS    += load.ui

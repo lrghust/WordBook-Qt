@@ -1,6 +1,8 @@
 #include "WordBook.h"
 
 bool createSqList(void){//创建线性表
+    L.listsize=INIT_LEN;
+    L.length=0;
     L.elem=(SqElemType *)malloc(INIT_LEN*sizeof(SqElemType));
     if(!L.elem){
         cout<<"内存申请失败！"<<endl;

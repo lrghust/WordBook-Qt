@@ -1,5 +1,5 @@
-#include "load.h"
 #include <QApplication>
+#include "load.h"
 
 int main(int argc, char *argv[])
 {

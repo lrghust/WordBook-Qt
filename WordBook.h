@@ -2,6 +2,8 @@
 #include<cstring>
 #include<cctype>
 #include<cstdlib>
+#include<cstdio>
+#include<ctime>
 const int DEFAULT_LEN=20;
 const int LETTERS_PER_LINE=50;
 const int LINES_PER_PAGE=50;
@@ -54,5 +56,8 @@ HashElemType *searchHash(char *word);
 extern SqList L;
 extern SqList Ls;
 extern HashTable H;
+bool init(char *path);
 bool loadBook(char *path);
 void getWord(char *word);
+bool saveData(void);
+bool loadData(char *path);

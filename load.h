@@ -2,6 +2,9 @@
 #define LOAD_H
 
 #include <QWidget>
+#include <QMessageBox>
+#include <QString>
+#include <QFileDialog>
 
 namespace Ui {
 class Load;
@@ -15,8 +18,33 @@ public:
     explicit Load(QWidget *parent = 0);
     ~Load();
 
+    static double ct1;
+    static double ct2;
+    static double ct3;
+
+private slots:
+    void on_ok_clicked();
+
+    void on_search_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Load *ui;
+    QString path;
+    QString bakpath;
+    QString word;
+    double t1;
+    double t2;
+    double t3;
+    int c1;
+    int c2;
+    int c3;
+    int flag_path=0;
 };
 
 #endif // LOAD_H
