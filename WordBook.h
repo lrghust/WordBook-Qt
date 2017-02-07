@@ -1,3 +1,5 @@
+#ifndef _WORDBOOK_H_
+#define _WORDBOOK_H_
 #include<iostream>
 #include<cstring>
 #include<cctype>
@@ -35,7 +37,8 @@ int searchSortedSqList(SqList &Ls,char *word);
 void sortSqList(SqList Ls);
 bool destroySqList(SqList &L);
 bool destroySortedSqList(SqList &Ls);
-void traverseSqList(SqList &L);
+void traverseSqList(SqList L,void (* visit)(SqElemType *));
+void visitSqList(SqElemType *elem);
 
 //Hash
 typedef struct HashElemType{
@@ -52,7 +55,8 @@ bool initHash(HashTable &H);
 void insertHash(HashTable &H,char *word, int pages, int lines);
 HashElemType *searchHash(HashTable H,char *word);
 bool destroyHash(HashTable &H, bool resume);
-bool traverseHash(HashTable &H);
+bool traverseHash(HashTable H, void (* visit)(HashElemType *));
+void visitHash(HashElemType *elem);
 bool deleteHash(HashTable &H, char *word);
 int hashFunction(char *word);
 
@@ -66,3 +70,4 @@ void getWord(char *word);
 bool saveData(char *path);
 bool loadData(char *path);
 
+#endif

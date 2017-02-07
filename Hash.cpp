@@ -1,4 +1,6 @@
 #include "WordBook.h"
+#include "load.h"
+//QString Load::traverse_text;
 bool initHash(HashTable &H){
     H.length=HASH_LEN;
     H.elem=(HashElemType *)malloc(H.length*sizeof(HashElemType));
@@ -100,22 +102,35 @@ bool destroyHash(HashTable &H, bool resume){
     H.elem=NULL;
     return true;
 }
-bool traverseHash(HashTable &H){
+bool traverseHash(HashTable H, void (* visit)(HashElemType *)){
     if(!H.elem)
         return false;
     for(int i=0;i<H.length;i++){
-        cout<<i+1<<":"<<endl;
+        //cout<<i+1<<":"<<endl;
+        Load::traverse_text.append(QString::number(i+1));
+        Load::traverse_text.append(":\n");
         if(H.elem[i].count==0)
             continue;
-        cout<<H.elem[i].word<<" ";
+        //cout<<H.elem[i].word<<" ";
+        (*visit)(&H.elem[i]);
         HashElemType *p=H.elem[i].next;
         while(p){
-            cout<<p->word<<" ";
+            //cout<<p->word<<" ";
+            (*visit)(p);
             p=p->next;
         }
-        cout<<endl;
+        //cout<<endl;
+        Load::traverse_text.append("\n");
     }
     return true;
+}
+void visitHash(HashElemType *elem){
+    QString word=QString(QLatin1String(elem->word));
+    Load::traverse_text.append(word);
+    Load::traverse_text.append(":");
+    QString count=QString::number(elem->count);
+    Load::traverse_text.append(count);
+    Load::traverse_text.append(" ");
 }
 
 bool deleteHash(HashTable &H, char *word){

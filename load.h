@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QString>
 #include <QFileDialog>
+#include "WordBook.h"
 
 namespace Ui {
 class Load;
@@ -22,6 +23,7 @@ public:
     static double ct2;
     static double ct3;
     static bool flag_resume;
+    static QString traverse_text;
 
 private slots:
     void on_ok_clicked();
@@ -38,6 +40,14 @@ private slots:
 
     void on_save_clicked();
 
+    void on_unsort_toggled(bool checked);
+
+    void on_sort_toggled(bool checked);
+
+    void on_hash_toggled(bool checked);
+
+    void on_traverse_clicked();
+
 private:
     Ui::Load *ui;
     QString path;
@@ -51,7 +61,8 @@ private:
     int c2;
     int c3;
     int flag_path=0;
+    int flag_traverse=0;
 
 };
-
+extern Load w;
 #endif // LOAD_H

@@ -1,5 +1,6 @@
 #include "WordBook.h"
-
+#include "load.h"
+QString Load::traverse_text;
 bool createSqList(SqList &L){//创建线性表
     L.listsize=INIT_LEN;
     L.length=0;
@@ -126,8 +127,21 @@ bool destroySortedSqList(SqList &Ls){
     return true;
 }
 
-void traverseSqList(SqList &L){
+void traverseSqList(SqList L,void (* visit)(SqElemType *)){
     for(int i=0;i<L.length;i++){
-        cout<<i+1<<": "<<L.elem[i].word<<endl;
+        (* visit)(&L.elem[i]);
     }
 }
+
+void visitSqList(SqElemType *elem){
+    Load::traverse_text.append("Word:");
+    QString word=QString(QLatin1String(elem->word));
+    Load::traverse_text.append(word);
+    QString count=QString::number(elem->count);
+    Load::traverse_text.append("    Count:");
+    Load::traverse_text.append(count);
+    Load::traverse_text.append("\n");
+}
+
+
+

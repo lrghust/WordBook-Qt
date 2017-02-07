@@ -51,7 +51,7 @@ void Load::on_search_clicked()
         QMessageBox::information(this,"Error","输入单词为空！");
     }
     else if(flag_path==0){
-        QMessageBox::information(this,"Error","未进行录入！");
+        QMessageBox::information(this,"Error","请先录入或恢复数据！");
     }
     else{
         word=ui->word->text();
@@ -173,3 +173,53 @@ void Load::on_save_clicked()
         }
     }
 }
+
+void Load::on_unsort_toggled(bool checked)
+{
+    if(checked)
+        flag_traverse=1;
+}
+
+void Load::on_sort_toggled(bool checked)
+{
+    if(checked)
+        flag_traverse=2;
+}
+
+void Load::on_hash_toggled(bool checked)
+{
+    if(checked)
+        flag_traverse=3;
+}
+
+void Load::on_traverse_clicked()
+{
+    ui->print->clear();
+    if(flag_path==0){
+        QMessageBox::information(this,"Error","请先录入或恢复数据！");
+        return;
+    }
+    switch (flag_traverse) {
+    case 0:
+        QMessageBox::information(this,"Error","请选择一种数据结构！");
+        break;
+    case 1:
+        traverse_text.clear();
+        traverseSqList(L,visitSqList);
+        ui->print->setText(traverse_text);
+        break;
+    case 2:
+        traverse_text.clear();
+        traverseSqList(Ls,visitSqList);
+        ui->print->setText(traverse_text);
+        break;
+    case 3:
+        traverse_text.clear();
+        traverseHash(H,visitHash);
+        ui->print->setText(traverse_text);
+        break;
+    default:
+        break;
+    }
+}
+
