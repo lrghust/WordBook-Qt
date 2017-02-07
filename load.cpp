@@ -8,7 +8,7 @@ Load::Load(QWidget *parent) :
     ui(new Ui::Load)
 {
     ui->setupUi(this);
-    ui->bakpath->setPlaceholderText("不输入则为默认路径");
+    //ui->bakpath->setPlaceholderText("不输入则为默认路径");
     L.elem=NULL;
     Ls.elem=NULL;
     H.elem=NULL;
@@ -35,9 +35,6 @@ void Load::on_ok_clicked()
             ui->ct2->setText(QString::number(ct2));
             ui->ct3->setText(QString::number(ct3));
             flag_path=1;
-            if(!saveData()){
-                QMessageBox::information(this,"Error","数据保存失败！");
-            }
         }
         else{
             QMessageBox::information(this,"Error","读取文件初始化失败！");
@@ -135,20 +132,44 @@ void Load::on_pushButton_2_clicked()
 
 void Load::on_pushButton_3_clicked()
 {
-    QString path;
     if(ui->bakpath->text().isEmpty())
-        path="./save.dat";
-    else
-        path=ui->bakpath->text();
-    char *path_=path.toLatin1().data();
-    if(!loadData(path_)){
-        QMessageBox::information(this,"Error","数据恢复失败！");
-    }
+        QMessageBox::information(this,"Error","输入路径为空！");
     else{
-        ui->count->setText(QString::number(L.length+1));
-        ui->ct1->setText(QString::number(ct1));
-        ui->ct2->setText(QString::number(ct2));
-        ui->ct3->setText(QString::number(ct3));
-        flag_path=1;
+        bakpath=ui->bakpath->text();
+        char *path_=bakpath.toLatin1().data();
+        if(!loadData(path_)){
+            QMessageBox::information(this,"Error","数据恢复失败！");
+        }
+        else{
+            ui->count->setText(QString::number(L.length+1));
+            ui->ct1->setText(QString::number(ct1));
+            ui->ct2->setText(QString::number(ct2));
+            ui->ct3->setText(QString::number(ct3));
+            flag_path=1;
+        }
+    }
+}
+
+void Load::on_pushButton_4_clicked()
+{
+    savepath=QFileDialog::getExistingDirectory(this,tr("File Path"),"/");
+    if(!savepath.isEmpty())
+        savepath=savepath+"/save.dat";
+    ui->savepath->setText(savepath);
+}
+
+void Load::on_save_clicked()
+{
+    if(ui->savepath->text().isEmpty())
+        QMessageBox::information(this,"Error","输入路径为空！");
+    else{
+        savepath=ui->savepath->text();
+        char *path=savepath.toLatin1().data();
+        if(!saveData(path)){
+            QMessageBox::information(this,"Error","数据保存失败！");
+        }
+        else{
+            QMessageBox::information(this,"Error","数据保存成功！");
+        }
     }
 }

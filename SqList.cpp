@@ -117,6 +117,15 @@ bool destroySqList(SqList &L){
     return true;
 }
 
+bool destroySortedSqList(SqList &Ls){
+    if(!Ls.elem)
+        return false;
+    free(Ls.elem);
+    Ls.elem=NULL;
+    Ls.length=Ls.listsize=0;
+    return true;
+}
+
 void traverseSqList(SqList &L){
     for(int i=0;i<L.length;i++){
         cout<<i+1<<": "<<L.elem[i].word<<endl;

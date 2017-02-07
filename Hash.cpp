@@ -74,7 +74,7 @@ HashElemType *searchHash(HashTable H,char *word){
     }
     return NULL;
 }
-bool destroyHash(HashTable &H){
+bool destroyHash(HashTable &H, bool resume){
     if(!H.elem)
         return false;
     for(int i=0;i<H.length;i++){
@@ -82,12 +82,14 @@ bool destroyHash(HashTable &H){
         HashElemType *q1=p1;
         while(p1){//冲突链表
             q1=q1->next;
-            WordInfo *p2=p1->info.next;
-            WordInfo *q2=p2;
-            while(p2){//重复链表
-                q2=q2->next;
-                free(p2);
-                p2=q2;
+            if(!resume){
+                WordInfo *p2=p1->info.next;
+                WordInfo *q2=p2;
+                while(p2){//重复链表
+                    q2=q2->next;
+                    free(p2);
+                    p2=q2;
+                }
             }
             free(p1);
             p1=q1;

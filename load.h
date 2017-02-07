@@ -21,6 +21,7 @@ public:
     static double ct1;
     static double ct2;
     static double ct3;
+    static bool flag_resume;
 
 private slots:
     void on_ok_clicked();
@@ -33,10 +34,15 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_save_clicked();
+
 private:
     Ui::Load *ui;
     QString path;
     QString bakpath;
+    QString savepath;
     QString word;
     double t1;
     double t2;
@@ -45,6 +51,7 @@ private:
     int c2;
     int c3;
     int flag_path=0;
+
 };
 
 #endif // LOAD_H

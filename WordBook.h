@@ -34,6 +34,7 @@ int searchUnsortedSqList(SqList &L,char *word);
 int searchSortedSqList(SqList &Ls,char *word);
 void sortSqList(SqList Ls);
 bool destroySqList(SqList &L);
+bool destroySortedSqList(SqList &Ls);
 void traverseSqList(SqList &L);
 
 //Hash
@@ -50,7 +51,7 @@ typedef struct{
 bool initHash(HashTable &H);
 void insertHash(HashTable &H,char *word, int pages, int lines);
 HashElemType *searchHash(HashTable H,char *word);
-bool destroyHash(HashTable &H);
+bool destroyHash(HashTable &H, bool resume);
 bool traverseHash(HashTable &H);
 bool deleteHash(HashTable &H, char *word);
 int hashFunction(char *word);
@@ -62,6 +63,6 @@ extern HashTable H;
 bool init(char *path);
 bool loadBook(char *path);
 void getWord(char *word);
-bool saveData(void);
+bool saveData(char *path);
 bool loadData(char *path);
 
