@@ -27,15 +27,14 @@ typedef struct{//线性表结构
     int length;
     int listsize;
 }SqList;
-bool createSqList(void);
-bool createSortedSqList(void);
-void loadSqList(char *word,int pages,int lines);
-int searchUnsortedSqList(char *word);
-int searchSortedSqList(char *word);
-int biSearch(char *word,int begin,int end);
-void SortSqList(SqElemType *elem,int num);
-void QuickSort(SqElemType *elem,int low,int high);
-int Partition(SqElemType *elem,int low,int high);
+bool createSqList(SqList &L);
+bool createSortedSqList(SqList L, SqList &Ls);
+void loadSqList(SqList &L,char *word,int pages,int lines);
+int searchUnsortedSqList(SqList &L,char *word);
+int searchSortedSqList(SqList &Ls,char *word);
+void sortSqList(SqList Ls);
+bool destroySqList(SqList &L);
+void traverseSqList(SqList &L);
 
 //Hash
 typedef struct HashElemType{
@@ -48,10 +47,14 @@ typedef struct{
     int length;
     HashElemType *elem;
 }HashTable;
-bool initHash(void);
-void insertHash(char *word, int pages, int lines);
+bool initHash(HashTable &H);
+void insertHash(HashTable &H,char *word, int pages, int lines);
+HashElemType *searchHash(HashTable H,char *word);
+bool destroyHash(HashTable &H);
+bool traverseHash(HashTable &H);
+bool deleteHash(HashTable &H, char *word);
 int hashFunction(char *word);
-HashElemType *searchHash(char *word);
+
 //main
 extern SqList L;
 extern SqList Ls;
@@ -61,3 +64,4 @@ bool loadBook(char *path);
 void getWord(char *word);
 bool saveData(void);
 bool loadData(char *path);
+

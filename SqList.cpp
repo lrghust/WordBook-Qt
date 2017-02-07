@@ -1,6 +1,6 @@
 #include "WordBook.h"
 
-bool createSqList(void){//创建线性表
+bool createSqList(SqList &L){//创建线性表
     L.listsize=INIT_LEN;
     L.length=0;
     L.elem=(SqElemType *)malloc(INIT_LEN*sizeof(SqElemType));
@@ -10,7 +10,7 @@ bool createSqList(void){//创建线性表
     }
     return true;
 }
-bool createSortedSqList(void){
+bool createSortedSqList(SqList L, SqList &Ls){
     Ls.length=L.length;
     Ls.listsize=L.length;
     Ls.elem=(SqElemType *)malloc(Ls.listsize*sizeof(SqElemType));
@@ -23,7 +23,7 @@ bool createSortedSqList(void){
     }
     return true;
 }
-void loadSqList(char *word,int pages,int lines){//向线性表中加入新单词
+void loadSqList(SqList &L,char *word,int pages,int lines){//向线性表中加入新单词
     int i;
     for(i=0;i<L.length;i++){
         if(!strcmp(word,L.elem[i].word)){//找到该单词已存在
@@ -49,7 +49,7 @@ void loadSqList(char *word,int pages,int lines){//向线性表中加入新单词
     L.elem[i].info.next=NULL;
 }
 
-int searchUnsortedSqList(char *word){
+int searchUnsortedSqList(SqList &L,char *word){
     for(int i=0;i<L.length;i++){
         if(!strcmp(L.elem[i].word, word)){
             return i+1;
@@ -58,11 +58,7 @@ int searchUnsortedSqList(char *word){
     return -1;
 }
 
-int searchSortedSqList(char *word){
-    return biSearch(word,1,Ls.length);
-}
-
-int biSearch(char *word,int begin,int end){
+static int biSearch(char *word,int begin,int end){
     if(begin>end)
         return -1;
     int mid=(begin+end)/2;
@@ -75,17 +71,11 @@ int biSearch(char *word,int begin,int end){
         return biSearch(word, begin, mid-1);
 }
 
-void SortSqList(SqElemType *elem,int num){
-    QuickSort(elem,1,num);
+int searchSortedSqList(SqList &Ls,char *word){
+    return biSearch(word,1,Ls.length);
 }
-void QuickSort(SqElemType *elem,int low,int high){
-    if(low<high){
-        int pivot=Partition(elem,low,high);
-        QuickSort(elem,low,pivot-1);
-        QuickSort(elem,pivot+1,high);
-    }
-}
-int Partition(SqElemType *elem,int low,int high){
+
+static int Partition(SqElemType *elem,int low,int high){
     SqElemType pivot=elem[low-1];
     while(low<high){
         while(low<high&&strcmp(elem[high-1].word,pivot.word)>=0)high--;
@@ -95,4 +85,40 @@ int Partition(SqElemType *elem,int low,int high){
     }
     elem[low-1]=pivot;
     return low;
+}
+
+static void QuickSort(SqElemType *elem,int low,int high){
+    if(low<high){
+        int pivot=Partition(elem,low,high);
+        QuickSort(elem,low,pivot-1);
+        QuickSort(elem,pivot+1,high);
+    }
+}
+
+void sortSqList(SqList Ls){
+    QuickSort(Ls.elem,1,Ls.length);
+}
+
+bool destroySqList(SqList &L){
+    if(!L.elem)
+        return false;
+    for(int i=0;i<L.length;i++){
+        WordInfo *p=L.elem[i].info.next;
+        WordInfo *q=p;
+        while(p){
+            q=q->next;
+            free(p);
+            p=q;
+        }
+    }
+    free(L.elem);
+    L.elem=NULL;
+    L.length=L.listsize=0;
+    return true;
+}
+
+void traverseSqList(SqList &L){
+    for(int i=0;i<L.length;i++){
+        cout<<i+1<<": "<<L.elem[i].word<<endl;
+    }
 }

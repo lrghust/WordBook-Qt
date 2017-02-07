@@ -9,6 +9,9 @@ Load::Load(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->bakpath->setPlaceholderText("不输入则为默认路径");
+    L.elem=NULL;
+    Ls.elem=NULL;
+    H.elem=NULL;
 }
 
 Load::~Load()
@@ -58,7 +61,7 @@ void Load::on_search_clicked()
         QByteArray word_=word.toLatin1();
         char *word_s=word_.data();
         clock_t start=clock();
-        int w1=searchUnsortedSqList(word_s);
+        int w1=searchUnsortedSqList(L,word_s);
         if(w1==-1){
             QMessageBox::information(this,"Error","未检索到所查单词！");
             return;
@@ -67,12 +70,12 @@ void Load::on_search_clicked()
         t1=(double)(end-start)/CLOCKS_PER_SEC*1000.0;
 
         start=clock();
-        int w2=searchSortedSqList(word_s);
+        int w2=searchSortedSqList(Ls,word_s);
         end=clock();
         t2=(double)(end-start)/CLOCKS_PER_SEC*1000.0;
 
         start=clock();
-        HashElemType *w3=searchHash(word_s);
+        HashElemType *w3=searchHash(H,word_s);
         end=clock();
         t3=(double)(end-start)/CLOCKS_PER_SEC*1000.0;
         //耗时输出
