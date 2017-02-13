@@ -64,5 +64,6 @@ private:
     int flag_traverse=0;
 
 };
+
 extern Load w;
 #endif // LOAD_H
