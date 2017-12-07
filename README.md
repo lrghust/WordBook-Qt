@@ -14,5 +14,3 @@ This is a word counter to count the word in a text file(English only).
 - traverse the whole list
 - save and load the .dat file
 
-## UI
-![UI](./ui.png)
